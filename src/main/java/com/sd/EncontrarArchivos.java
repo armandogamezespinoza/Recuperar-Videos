@@ -34,6 +34,7 @@ public class EncontrarArchivos {
         System.out.println("Los archivos son: " + archivosParaRecuperar);
     }
 
+    // Implementación de un getter para poder usar la lista de archivos
     public ArrayList<String> getArchivosParaRecuperar() {
         return archivosParaRecuperar;
     }
