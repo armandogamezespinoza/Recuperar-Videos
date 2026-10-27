@@ -1,17 +1,25 @@
-package com.subastas;
+package com.sd;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
 public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+    public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+        // Nombre del video de referencia; se puede pasar como argumento o usa el valor por defecto
+        String nombreArchivoCorrecto = args.length > 0 ? args[0] : "video_bueno.mp4";
+
+        // Detectamos los archivos corruptos en la carpeta de ejecución
+        EncontrarArchivos encontrarArchivos = new EncontrarArchivos(nombreArchivoCorrecto);
+        ArrayList<String> archivos = encontrarArchivos.getArchivosParaRecuperar();
+
+        // Lanzamos untrunc sobre cada archivo corrupto
+        RepararArchivos repararArchivos = new RepararArchivos(archivos, nombreArchivoCorrecto);
+        repararArchivos.reparar();
+
+        // Limpiamos los archivos originales corruptos
+        EliminarArchivosCorruptos eliminar = new EliminarArchivosCorruptos(archivos);
+        eliminar.eliminar();
     }
 }
